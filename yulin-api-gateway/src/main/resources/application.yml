@@ -1,0 +1,74 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: yulin-api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: gate_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+            - Header=X-Ca-Key
+            - Header=X-Ca-Timestamp
+            - Header=X-Ca-Nonce
+            - Header=X-Ca-Signature-Method
+            - Header=X-Ca-Signature
+          filters:
+            - RewritePath=/api/(?<segment>.*), /api/$\{segment}
+            - AuthenticationFilter
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
+                key-resolver: "#{@apiKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: my_circuit_breaker
+                fallbackUri: forward:/fallback
+                statusCodes: BAD_GATEWAY
+            - name: IPFilter
+              args:
+                whitelist: "127.0.0.1,::1" # 这里设置你的白名单 IP 地址
+
+        - id: error_route
+          uri: forward:/error  # 转发到错误页面或者错误处理的URL
+          predicates:
+            - Path=/**  # 匹配所有路径
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      my_circuit_breaker:
+        registerHealthIndicator: true
+        waitDurationInOpenState: 5000
+        failureRateThreshold: 50
+        slowCallRateThreshold: 100
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+dubbo:
+  application:
+    # 设置应用的名称
+    name: yulin-api-consumer
+    qosEnable: true
+    qosPort: 33333
+    qosAcceptForeignIp: false
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
+
+

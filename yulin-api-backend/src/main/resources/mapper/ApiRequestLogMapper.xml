@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.yulin.mapper.ApiRequestLogMapper">
+
+    <resultMap id="BaseResultMap" type="csu.yulin.model.entity.ApiRequestLog">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="apiId" column="api_id" jdbcType="BIGINT"/>
+        <result property="requestTime" column="request_time" jdbcType="TIMESTAMP"/>
+        <result property="requestParams" column="request_params" jdbcType="OTHER"/>
+        <result property="responseData" column="response_data" jdbcType="OTHER"/>
+        <result property="statusCode" column="status_code" jdbcType="INTEGER"/>
+        <result property="responseTime" column="response_time" jdbcType="BIGINT"/>
+        <result property="requestResult" column="request_result" jdbcType="VARCHAR"/>
+        <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+        <result property="deviceInfo" column="device_info" jdbcType="VARCHAR"/>
+        <result property="requestSource" column="request_source" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,api_id,
+        request_time,request_params,response_data,
+        status_code,response_time,request_result,
+        ip_address,device_info,request_source,
+        remark
+    </sql>
+</mapper>

@@ -1,0 +1,24 @@
+yulin:
+  api:
+    backend:
+      # Redis 服务器的主机地址
+      redis:
+        host: 127.0.0.1                   # Redis 服务器的主机地址
+        password: 123456                   # Redis 服务器的连接密码
+      # 数据源配置
+      datasource:
+        url: jdbc:mysql://127.0.0.1:3306/api_platform?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: root
+      # api调用服务的基础URL
+      base-url: http://localhost:8081
+      # dubbo配置
+      dubbo:
+        registry:
+          address: nacos://localhost:8848
+      # 报表文件存储路径
+      report:
+        path: D:\\report\
+      # SDK输出路径
+      sdk:
+        output-path: D:\liupiao\yulin-api-sdk\src\main\java\csu\yulin\client\

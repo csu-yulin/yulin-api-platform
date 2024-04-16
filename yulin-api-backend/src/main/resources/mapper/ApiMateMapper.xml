@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.yulin.mapper.ApiMateMapper">
+
+    <resultMap id="BaseResultMap" type="csu.yulin.model.entity.ApiMate">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="apiId" column="api_id" jdbcType="BIGINT"/>
+        <result property="subPackageName" column="sub_package_name" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,api_id,sub_package_name,
+        class_name,created_time,updated_time,
+        is_deleted
+    </sql>
+</mapper>

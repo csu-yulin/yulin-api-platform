@@ -1,0 +1,167 @@
+# spring配置
+spring:
+  # 应用信息配置
+  application:
+    name: yulin-api-backend
+  # profiles配置
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  # redis配置
+  cache:
+    redis:
+      time-to-live: 1800000
+  data:
+    redis:
+      host: ${yulin.api.backend.redis.host}                   # Redis 服务器的主机地址
+      port: 6379                           # Redis 服务器的端口号
+      database: 0                          # Redis 数据库的索引号，这里设置为 0 表示使用默认的数据库
+      lettuce: # Jedis 连接池配置
+        pool: # 连接池配置
+          max-active: 8                    # 连接池中的最大活动连接数
+          max-wait: 1                   # 当连接池中的连接耗尽时，等待获取连接的最大时间，单位为毫秒
+          max-idle: 4                      # 连接池中的最大空闲连接数
+          min-idle: 0                      # 连接池中的最小空闲连接数
+      password: ${yulin.api.backend.redis.password}                    # Redis 服务器的连接密码
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${yulin.api.backend.datasource.url}
+    username: ${yulin.api.backend.datasource.username}
+    password: ${yulin.api.backend.datasource.password}
+    druid:
+      # 初始化时建立物理连接的个数
+      initial-size: 5
+      # 连接池的最小空闲数量
+      min-idle: 5
+      # 连接池最大连接数量
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-while-idle: true
+      # 既作为检测的间隔时间又作为testWhileIdel执行的依据
+      time-between-eviction-runs-millis: 60000
+      # 销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接(配置连接在池中的最小生存时间)
+      min-evictable-idle-time-millis: 30000
+      # 用来检测数据库连接是否有效的sql 必须是一个查询语句(oracle中为 select 1 from dual)
+      validation-query: select 'x'
+      # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      # 是否缓存preparedStatement, 也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
+      pool-prepared-statements: false
+      # 置监控统计拦截的filters，去掉后监控界面sql无法统计，stat: 监控统计、Slf4j:日志记录、waLL: 防御sqL注入
+      filters: stat,wall,slf4j
+      # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+      max-pool-prepared-statement-per-connection-size: -1
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+
+      web-stat-filter:
+        # 是否启用StatFilter默认值true
+        enabled: true
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤的格式
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico
+
+      stat-view-servlet:
+        # 是否启用StatViewServlet默认值true
+        enabled: true
+        # 访问路径为/druid时，跳转到StatViewServlet
+        url-pattern: /druid/*
+        # 是否能够重置数据
+        reset-enable: false
+        # 需要账号密码才能访问控制台，默认为root
+        login-username: druid
+        login-password: druid
+#        # IP白名单
+#        allow: 127.0.0.1
+#        # IP黑名单（共同存在时，deny优先于allow）
+#        deny:
+
+
+
+# server配置
+server:
+  port: 8082
+  servlet:
+    context-path:
+
+
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    # 下划线转驼峰开启（如果字段名是下划线分隔的，则自动转换为驼峰命名）
+    map-underscore-to-camel-case: true
+    # SQL 打印配置
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印 SQL 语句到控制台
+  # 逻辑删除配置
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+
+
+# 配置swagger文档的访问路径
+springdoc:
+  api-docs:
+    enabled: true # 开启OpenApi接口
+    path: /v3/api-docs  # 自定义路径，默认为 "/v3/api-docs"
+  swagger-ui:
+    enabled: true # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
+    path: /index.html # 访问路径会自动加上/swagger-ui, 访问"/swagger-ui/index.html"即可
+
+
+
+# jwt
+jwt:
+  secret: abcdeadkjfvhn542y3^%Y@%$u769GBRWEHG*&I$H542g2j09g120-gjpqoreviuh6$&*H@$%fghabcdefghabcdefghabcdefgh
+
+
+
+# 以下配置指定了应用的名称、使用的协议（Dubbo）、注册中心的类型（Nacos）和地址
+dubbo:
+  application:
+    # 设置应用的名称
+    name: yulin-api-provider
+  # 指定使用 Dubbo 协议，且端口设置为 -1，表示随机分配可用端口
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    # 配置注册中心为 Nacos，使用的地址是 nacos://localhost:8848
+    id: nacos-registry
+    address: ${yulin.api.backend.dubbo.registry.address}
+  scan:
+    base-packages: csu.yulin.service.impl
+
+
+
+
+# api调用服务的基础URL
+base-url: ${yulin.api.backend.base-url}
+
+
+
+# 报表文件存储路径
+report:
+  path: ${yulin.api.backend.report.path}
+
+
+
+# SDK配置
+sdk:
+  package-name: csu.yulin
+  template-path: /templates
+  request-template: RequestTemplate.ftl
+  response-template: ResponseTemplate.ftl
+  request-example-template: RequestExampleTemplate.ftl
+  output-path: ${yulin.api.backend.sdk.output-path}

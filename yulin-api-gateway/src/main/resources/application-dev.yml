@@ -1,0 +1,19 @@
+spring:
+  # redis配置
+  cache:
+    redis:
+      time-to-live: 1800000
+  data:
+    redis:
+      host: 127.0.0.1                   # Redis 服务器的主机地址
+      port: 6379                           # Redis 服务器的端口号
+      database: 0                          # Redis 数据库的索引号，这里设置为 0 表示使用默认的数据库
+      lettuce: # Jedis 连接池配置
+        pool: # 连接池配置
+          max-active: 8                    # 连接池中的最大活动连接数
+          max-wait: 1                   # 当连接池中的连接耗尽时，等待获取连接的最大时间，单位为毫秒
+          max-idle: 4                      # 连接池中的最大空闲连接数
+          min-idle: 0                      # 连接池中的最小空闲连接数
+      password: 123456                   # Redis 服务器的连接密码
+
+

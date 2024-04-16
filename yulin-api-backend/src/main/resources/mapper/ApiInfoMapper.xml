@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csu.yulin.mapper.ApiInfoMapper">
+
+    <resultMap id="BaseResultMap" type="csu.yulin.model.entity.ApiInfo">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="httpMethod" column="http_method" jdbcType="OTHER"/>
+        <result property="requestParameters" column="request_parameters" jdbcType="OTHER"/>
+        <result property="responseParameters" column="response_parameters" jdbcType="OTHER"/>
+        <result property="requestExample" column="request_example" jdbcType="VARCHAR"/>
+        <result property="responseExample" column="response_example" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="creator" column="creator" jdbcType="BIGINT"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,description,
+        path,http_method,request_parameters,
+        response_parameters,request_example,response_example,
+        created_time,updated_time,creator,
+        status,is_deleted
+    </sql>
+</mapper>
