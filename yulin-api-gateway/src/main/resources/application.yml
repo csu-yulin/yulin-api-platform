@@ -36,7 +36,7 @@ spring:
               args:
                 name: my_circuit_breaker
                 fallbackUri: forward:/fallback
-                statusCodes: BAD_GATEWAY
+                statusCodes: BAD_GATEWAY,BAD_REQUEST
             - name: IPFilter
               args:
                 whitelist: "127.0.0.1,::1" # 这里设置你的白名单 IP 地址

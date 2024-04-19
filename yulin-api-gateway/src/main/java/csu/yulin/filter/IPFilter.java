@@ -14,7 +14,6 @@ import java.util.Objects;
  * @author 刘飘
  */
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class IPFilter extends AbstractGatewayFilterFactory<IPFilter.Config> {
 
     public IPFilter() {

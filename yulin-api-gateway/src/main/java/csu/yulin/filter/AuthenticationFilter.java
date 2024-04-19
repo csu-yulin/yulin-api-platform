@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
  * @author 刘飘
  */
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 2) // 设置过滤器的执行顺序为最高优先级
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<Object> {
     @DubboReference
     private UserService userService;
